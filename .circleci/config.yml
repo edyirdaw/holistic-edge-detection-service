@@ -4,7 +4,13 @@ jobs:
     docker:
       - image: israelabebe/holistically-nested-edge-detection:latest
     steps:
-      - checkout 
+      - checkout
+      - run:
+          name: install GRPC
+          command: python3.6 -m pip install grpcio grpcio-tools
+      - run:
+          name: Generate GRPC files
+          command: cd Service && python3.6 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. edgedetect.proto
       - run:
           name: Run Tests
           command: python3.6 -m unittest test_rpc_call.TestSuiteGrpc

@@ -7,22 +7,52 @@ For the original version of this work, please see: https://github.com/s9xie/hed
 <br />
 For another reimplementation based on Caffe, please see: https://github.com/zeakey/hed
 
-## Requirement
-	To install requirements for the project 
+
+## Install prerequisites
+### Using conda
+
+	conda env create -f environment.yml
+	conda activate edge-detection-snet-agent
+
+
+## Using pip
+	#To install requirements for the project 
 	$ pip install -r requirements.txt
 	
 	$ pip install grpcio
 	$ pip install grpcio-tools
+	
+## Download pretrained models
+
+	bash download.bash
          
 
 ## Setup
-To download the pre-trained models, run `bash download.bash`. These originate from the original authors, I just converted them to PyTorch.
-
 - run the following command to generate gRPC classes for Python
     
       # only in Service folder run
       $ python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. Service/edgedetect.proto
 
+
+## Using docker with GPU
+
+If you have a [nvidia-docker2](https://github.com/NVIDIA/nvidia-docker) installed, we have Dockerfile.gpu which you can use to build your image.
+
+     docker build --file Dockerfile.gpu . -t singnet:hed
+
+## Using docker with CPU
+
+You can also build an image which has only the CPU dependecies to evaluate the models provided.
+
+	docker build --file Dockerfile . -t singnet:hed-cpu
+	
+
+## How to Use the docker image
+	
+	# this will open port 50051 and run the service 
+	docker run -it --rm -p 50051:50051 hed:0.1
+	
+	
 
 ## Usage
 To run it on your own image, use the following command. Please make sure to see their paper / the code for more details.
