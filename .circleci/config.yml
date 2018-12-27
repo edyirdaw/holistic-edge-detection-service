@@ -1,18 +1,11 @@
-version: 0.1
+version: 2
 jobs:
   build:
     docker:
-      - image:israelabebe/holistically-nested-edge-detection:latest
+      - image: hed:0.1
     steps:
       - checkout
       - run:
-          name: Install Requests
-          command: python3.6 -m pip install requests
-      - run: 
-          name: Run Tests
-          command: python3.6 -m unittest test_rpc_call.TestSuiteGrpc
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
+        name: Run Tests
+        command: python3.6 -m unittest test_rpc_call.TestSuiteGrpc
+          
