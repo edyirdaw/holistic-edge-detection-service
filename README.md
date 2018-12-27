@@ -1,5 +1,9 @@
-# pytorch-hed
-This is implementation of Holistically-Nested Edge Detection [1] using PyTorch. Should you be making use of this work, please cite the paper accordingly. Also, make sure to adhere to the licensing terms of the authors. Should you be making use of this particular implementation, please acknowledge it appropriately.
+![singnetlogo](images/singnet-logo.jpg?raw=true 'SingularityNET')
+
+
+[![CircleCI](https://circleci.com/gh/IsraelAbebe/pytorch-hed.svg?style=svg)](https://circleci.com/gh/IsraelAbebe/pytorch-hed)
+# Holistically-Nested Edge Detection
+This is implementation of Holistically-Nested Edge Detection [1] using PyTorch. 
 
 <a href="https://arxiv.org/abs/1504.06375" rel="Paper"><img src="http://www.arxiv-sanity.com/static/thumbs/1504.06375v2.pdf.jpg" alt="Paper" width="100%"></a>
 
