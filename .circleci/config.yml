@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: hed:0.1
+      - image: israelabebe/holistically-nested-edge-detection:latest
     steps:
       - checkout 
       - run:
