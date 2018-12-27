@@ -14,21 +14,22 @@ class EdgedetectServicer(edgedetect_pb2_grpc.EdgedetectServicer):
 		return responce
 
 
+class Server():
+	def __init__(self):
+		self.port = '[::]:50051'
+		self.server = None
+	def start_server(self):
+		self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+		edgedetect_pb2_grpc.add_EdgedetectServicer_to_server(EdgedetectServicer(),self.server)
+		print('Starting server. Listening on port 50051.')
+		self.server.add_insecure_port(self.port)
+		self.server.start()
 
-server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-edgedetect_pb2_grpc.add_EdgedetectServicer_to_server(EdgedetectServicer(),server)
+	
+		
+	def stop_server(self):
+		self.server.stop(0)
 
 
 
-# listen on port 50051
-print('Starting server. Listening on port 50051.')
-server.add_insecure_port('[::]:50051')
-server.start()
 
-# since server.start() will not block,
-# a sleep-loop is added to keep alive
-try:
-    while True:
-        time.sleep(86400)
-except KeyboardInterrupt:
-    server.stop(0)

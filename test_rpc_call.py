@@ -2,31 +2,37 @@ import sys
 sys.path.insert(0, 'Service/')
 
 from client import ClientTest
+from server import *
 from PIL import Image
 import unittest
 import numpy as np 
+import subprocess
 
 
 class TestSuiteGrpc(unittest.TestCase):
     def setUp(self):
     	self.image = Image.open('images/sample.png')
-    	self.server = ClientTest()
+    	self.server = Server()
+    	self.server.start_server()
+    	self.client = ClientTest()
+
 
     def test_grpc_call(self):
-    	stub = self.server.open_grpc_channel()
-    	result_image = self.server.send_request(stub,self.image)
+    	stub = self.client.open_grpc_channel()
+    	result_image = self.client.send_request(stub,self.image)
     	result_image =  result_image.resize((480,320))
     	result_image.save("images/client_out2.png")
 
+
     	img_res = np.asarray(Image.open("images/client_out2.png").convert('L'))
     	img_expected = np.asarray(Image.open("images/client_out.png").convert('L'))
-    	# print(img_res.shape,img_out.shape)
+
     	assert (img_res==img_expected).all()
     	
 
     def tearDown(self):
-        # self.server.channel.close()
-        pass
+        # self.client.channel.close()
+        self.server.stop_server()
 
 
 
