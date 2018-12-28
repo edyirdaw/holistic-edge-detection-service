@@ -7,6 +7,8 @@ from PIL import Image
 import unittest
 import numpy as np 
 import subprocess
+import torch.nn as nn
+import torch
 
 
 class TestSuiteGrpc(unittest.TestCase):
@@ -15,6 +17,7 @@ class TestSuiteGrpc(unittest.TestCase):
     	self.server = Server()
     	self.server.start_server()
     	self.client = ClientTest()
+
 
 
     def test_grpc_call(self):
@@ -26,8 +29,7 @@ class TestSuiteGrpc(unittest.TestCase):
 
     	img_res = np.asarray(Image.open("images/client_out2.png").convert('L'))
     	img_expected = np.asarray(Image.open("images/client_out.png").convert('L'))
-
-    	assert (True==True)
+    	assert (img_res==img_expected).all()
     	
 
     def tearDown(self):
