@@ -35,7 +35,7 @@ For another reimplementation based on Caffe, please see: https://github.com/zeak
 - run the following command to generate gRPC classes for Python
     
       # only in Service folder run
-      $ python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. Service/edgedetect.proto
+      $ python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. edgedetect.proto
 
 
 
@@ -46,21 +46,7 @@ To run it on your own image, use the following command. Please make sure to see 
 	
 
 	# on project directory this will start the server 
-	$ python Service/server.py
-
-
-
-	#on other terminal run 
-	$ python Service/client.py [-h] [--image_input IMAGE_INPUT]
-                       [--image_output IMAGE_OUTPUT] [--port PORT]
-
-         optional arguments:
-            -h, --help            show this help message and exit
-            --image_input IMAGE_INPUT
-                                  image path
-            --image_output IMAGE_OUTPUT
-                                  output image file name like "client_out"
-            --port PORT           port you are using like : "localhost:50051" [The server must run on the port you specify ]
+	$ python  start_service.py
 
 
 
@@ -81,7 +67,7 @@ You can also build an image which has only the CPU dependecies to evaluate the m
 ## How to Use the docker image
 	
 	# this will open port 50051 and run the service 
-	docker run -it --rm -p 50051:50051 hed:0.1
+	docker run -it --rm -p 50051:50051 singnet:hed
 	
 
 ## Authors

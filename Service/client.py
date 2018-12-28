@@ -5,14 +5,13 @@ import edgedetect_pb2_grpc
 import base64
 
 from PIL import Image
-import  sys
-
+import sys
 
 from inspect import getsourcefile
 import os.path
 import sys
 
-current_path = os.path.abspath(getsourcefile(lambda:0))
+current_path = os.path.abspath(getsourcefile(lambda: 0))
 current_dir = os.path.dirname(current_path)
 parent_dir = current_dir[:current_dir.rfind(os.path.sep)]
 
@@ -25,37 +24,31 @@ parser = argparse.ArgumentParser()
 
 
 class ClientTest():
-	def __init__(self,port='localhost:50051',image_output='client_out'):
-		self.port = port
-		self.image_output = image_output
+    def __init__(self, port='localhost:50051', image_output='client_out'):
+        self.port = port
+        self.image_output = image_output
 
-	def open_grpc_channel(self):
-		channel = grpc.insecure_channel(self.port)
-		stub = edgedetect_pb2_grpc.EdgedetectStub(channel)
-		return stub
-		
+    def open_grpc_channel(self):
+        channel = grpc.insecure_channel(self.port)
+        stub = edgedetect_pb2_grpc.EdgedetectStub(channel)
+        return stub
 
-	def send_request(self,stub,img):
-		out_file_name = self.image_output+'.png'
-		img = img
-		img = img.resize((480,320))
-		img_b = img.tobytes() 
+    def send_request(self, stub, img):
+        out_file_name = self.image_output + '.png'
+        img = img
+        img = img.resize((480, 320))
+        img_b = img.tobytes()
 
+        image_file = edgedetect_pb2.ImageFile(value=img_b)
 
-		image_file = edgedetect_pb2.ImageFile(value = img_b)
+        responce = stub.DetectEdge(image_file)
 
-		responce = stub.DetectEdge(image_file)
+        image = Image.frombytes(data=responce.value, size=(480, 320), mode='RGB')
 
-		image = Image.frombytes(data=responce.value,size=(480,320),mode='RGB')
+        return image
 
-		return image
-	def close_channel(self,channel):
-		pass
-
-
-
-
-
+    def close_channel(self, channel):
+        pass
 
 # if __name__ == "__main__":
 #     parser.add_argument("--image_input",type=str,help='image path')
