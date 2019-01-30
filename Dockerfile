@@ -19,6 +19,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 RUN python3.6 -m pip install -U pip
+
+COPY requirements.txt /tmp
+
+WORKDIR /tmp
+
 RUN python3.6 -m pip install -r requirements.txt
 
 COPY . /pytorch-hed
