@@ -24,7 +24,7 @@ parser = argparse.ArgumentParser()
 
 
 class ClientTest():
-    def __init__(self, port='localhost:50051', image_output='client_out'):
+    def __init__(self, port='159.69.56.49:50051', image_output='client_out'):
         self.port = port
         self.image_output = image_output
 
@@ -41,9 +41,10 @@ class ClientTest():
 
         image_file = edgedetect_pb2.ImageFile(value=img_b)
 
-        responce = stub.DetectEdge(image_file)
+        response = stub.DetectEdge(image_file)
 
-        image = Image.frombytes(data=responce.value, size=(480, 320), mode='RGB')
+        print(response)
+        image = Image.frombytes(data=response.value, size=(480, 320), mode='RGB')
 
         return image
 
@@ -61,7 +62,8 @@ class ClientTest():
 #     	parser.print_help()
 #     	sys.exit()
 
-#     client_test = ClientTest(args)
-#     stub = client_test.open_grpc_channel()
-#     image = client_test.send_request(stub)
-#     print(type(image))
+image = Image.open('images/sample.png')
+client_test = ClientTest()
+stub = client_test.open_grpc_channel()
+image = client_test.send_request(stub, image)
+print(type(image))
