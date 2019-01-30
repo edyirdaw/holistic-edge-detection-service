@@ -10,6 +10,7 @@ import sys
 from inspect import getsourcefile
 import os.path
 import sys
+import tempfile
 
 current_path = os.path.abspath(getsourcefile(lambda: 0))
 current_dir = os.path.dirname(current_path)
@@ -34,12 +35,11 @@ class ClientTest():
         return stub
 
     def send_request(self, stub, img):
-        out_file_name = self.image_output + '.png'
-        img = img
-        img = img.resize((480, 320))
-        img_b = img.tobytes()
+        # img = img
+        # img = img.resize((480, 320))
+        # img_b = img.tobytes()
 
-        image_file = edgedetect_pb2.ImageFile(value=img_b)
+        image_file = edgedetect_pb2.ImageFile(image=img)
 
         response = stub.DetectEdge(image_file)
 
@@ -67,9 +67,12 @@ class ClientTest():
 # query = '{"value" : "' + str(img_bytes) + '"}'
 # with open('query.json', 'wt') as f:
 #     f.write(str(query))
-image = Image.open('images/sample.png')
-image_64 = base64.b64encode(image).decode('utf-8')
+with open('images/sample.png', 'rb') as f:
+    img = f.read()
+    image = base64.b64encode(img).decode('utf-8')
 client_test = ClientTest()
 stub = client_test.open_grpc_channel()
-image = client_test.send_request(stub, image)
+image_result = client_test.send_request(stub, image)
+binary_image = base64.b64decode(image_result.value)
+Image.frombytes(binary_image).save('result.png')
 print(type(image))

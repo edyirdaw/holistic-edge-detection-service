@@ -15,7 +15,7 @@ class EdgedetectServicer(edgedetect_pb2_grpc.EdgedetectServicer):
         if request.image_type is None:
             raise InvalidParams("Image type is required")
         response = edgedetect_pb2.ImageFile()
-        response.value = edgedetect.detectedge(request.value, request.image_type)
+        response.image = edgedetect.detectedge(request.image, request.image_type)
         return response
 
 
