@@ -30,10 +30,11 @@ train_on_gpu = torch.cuda.is_available()
 def detectedge(image_in, image_type):
     IMAGE_TYPE = image_type
     binary_image = base64.b64decode(image_in)
-    # f = tempfile.NamedTemporaryFile()
-    # f.write(binary_image)
+    f = tempfile.NamedTemporaryFile()
+    f.write(binary_image)
     if image_type == 'RGB':
         image = PIL.Image.open(BytesIO(binary_image))
+        IMAGE_TYPE = 'RGB'
         # =image_in, size=(480, 320), mode='RGB')
     else:
         image = PIL.Image.open(BytesIO(binary_image))
