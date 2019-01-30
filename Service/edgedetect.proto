@@ -1,7 +1,8 @@
 syntax = "proto3";
 
 message ImageFile {
-	bytes value = 1;
+	string value = 1;
+	string image_type = 2;
 }
 
 service Edgedetect {

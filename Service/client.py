@@ -68,6 +68,7 @@ class ClientTest():
 # with open('query.json', 'wt') as f:
 #     f.write(str(query))
 image = Image.open('images/sample.png')
+image_64 = base64.b64encode(image).decode('utf-8')
 client_test = ClientTest()
 stub = client_test.open_grpc_channel()
 image = client_test.send_request(stub, image)
