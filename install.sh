@@ -14,3 +14,4 @@ else
 fi
 
 wget --timestamping http://content.sniklaus.com/github/pytorch-hed/network-bsds500.pytorch
+cp snet.config.example snetd.json
