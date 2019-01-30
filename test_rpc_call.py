@@ -10,24 +10,31 @@ import numpy as np
 import subprocess
 import torch.nn as nn
 import torch
+import base64
 
 
 class TestSuiteGrpc(unittest.TestCase):
     def setUp(self):
-        self.image = Image.open('images/sample.png')
+        with open('images/sample.png', 'rb') as f:
+            img = f.read()
+            self.image = base64.b64encode(img).decode('utf-8')
+            self.image_type = 'RGB'
         self.server = Server()
         self.server.start_server()
         self.client = ClientTest()
 
     def test_grpc_call(self):
         stub = self.client.open_grpc_channel()
-        result_image = self.client.send_request(stub, self.image)
-        result_image = result_image.resize((480, 320))
+        result_image = self.client.send_request(stub, self.image, self.image_type)
+
+        binary_image = base64.b64decode(result_image.image)
+        result_image = Image.frombytes(data=binary_image,size=(480,320),mode='RGB')
+
         result_image.save("images/client_out2.png")
 
         img_res = np.asarray(Image.open("images/client_out2.png").convert('L'))
         img_expected = np.asarray(Image.open("images/client_out.png").convert('L'))
-        assert (img_res == img_expected).all()
+        self.assertEqual(img_res.all(), img_expected.all())
 
     def tearDown(self):
         # self.client.channel.close()

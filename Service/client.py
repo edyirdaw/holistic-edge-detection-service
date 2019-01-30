@@ -26,7 +26,7 @@ parser = argparse.ArgumentParser()
 
 
 class ClientTest():
-    def __init__(self, port='159.69.56.49:50051', image_output='client_out'):
+    def __init__(self, port='localhost:50051', image_output='client_out'):
         self.port = port
         self.image_output = image_output
 
@@ -35,7 +35,7 @@ class ClientTest():
         stub = edgedetect_pb2_grpc.EdgedetectStub(channel)
         return stub
 
-    def send_request(self, stub, img):
+    def send_request(self, stub, img, image_type='RGB'):
         # img = img
         # img = img.resize((480, 320))
         # img_b = img.tobytes()
@@ -64,15 +64,12 @@ class ClientTest():
 # query = '{"value" : "' + str(img_bytes) + '"}'
 # with open('query.json', 'wt') as f:
 #     f.write(str(query))
-with open('images/sample.png', 'rb') as f:
-    img = f.read()
-    image = base64.b64encode(img).decode('utf-8')
-client_test = ClientTest()
-stub = client_test.open_grpc_channel()
-image_result = client_test.send_request(stub, image)
-binary_image = base64.b64decode(image_result.image)
-t = tempfile.NamedTemporaryFile()
-t.write(binary_image)
-img = cv2.imread(t.name)
-cv2.imwrite("img.png",img)
-print(type(image))
+if __name__ == "__main__":
+    with open('images/sample.png', 'rb') as f:
+        img = f.read()
+        image = base64.b64encode(img).decode('utf-8')
+    client_test = ClientTest()
+    stub = client_test.open_grpc_channel()
+    image_result = client_test.send_request(stub, image)
+    binary_image = base64.b64decode(image_result.image)
+    Image.frombytes(data=binary_image,size=(480,320),mode='RGB').save('img.png')
