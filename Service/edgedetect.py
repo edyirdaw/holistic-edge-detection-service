@@ -13,7 +13,7 @@ import base64
 from inspect import getsourcefile
 import os.path
 import sys
-import io
+from io import BytesIO
 import tempfile
 
 current_path = os.path.abspath(getsourcefile(lambda: 0))
@@ -30,13 +30,13 @@ train_on_gpu = torch.cuda.is_available()
 def detectedge(image_in, image_type):
     IMAGE_TYPE = image_type
     binary_image = base64.b64decode(image_in)
-    f = tempfile.NamedTemporaryFile()
-    f.write(binary_image)
+    # f = tempfile.NamedTemporaryFile()
+    # f.write(binary_image)
     if image_type == 'RGB':
-        image = PIL.Image.Open(f.name)
+        image = PIL.Image.open(BytesIO(binary_image))
         # =image_in, size=(480, 320), mode='RGB')
     else:
-        image = PIL.Image.Open(f.name)
+        image = PIL.Image.open(BytesIO(binary_image))
         image = image.convert('RGB')
         IMAGE_TYPE = 'L'
 
