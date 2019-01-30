@@ -33,4 +33,5 @@ EXPOSE 50051
 
 RUN cd Service && python3.6 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. edgedetect.proto
 
+RUN ./install.sh
 CMD ["python3.6", "start_service.py"]
