@@ -62,6 +62,11 @@ class ClientTest():
 #     	parser.print_help()
 #     	sys.exit()
 
+# img = image.resize((480,320))
+# img_bytes = img.tobytes()
+# query = '{"value" : "' + str(img_bytes) + '"}'
+# with open('query.json', 'wt') as f:
+#     f.write(str(query))
 image = Image.open('images/sample.png')
 client_test = ClientTest()
 stub = client_test.open_grpc_channel()
