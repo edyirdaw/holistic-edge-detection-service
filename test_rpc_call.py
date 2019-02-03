@@ -28,11 +28,11 @@ class TestSuiteGrpc(unittest.TestCase):
         result_image = self.client.send_request(stub, self.image, self.image_type)
 
         binary_image = base64.b64decode(result_image.image)
-        result_image = Image.frombytes(data=binary_image,size=(480,320),mode='RGB')
+        with open("images/client_out2." + result_image.image_type, 'wb') as f:
+            f.write(binary_image)
 
-        result_image.save("images/client_out2.png")
 
-        img_res = np.asarray(Image.open("images/client_out2.png").convert('L'))
+        img_res = np.asarray(Image.open("images/client_out2." + result_image.image_type).convert('L'))
         img_expected = np.asarray(Image.open("images/client_out.png").convert('L'))
         self.assertEqual(img_res.all(), img_expected.all())
 

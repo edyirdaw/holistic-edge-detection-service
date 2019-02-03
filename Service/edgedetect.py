@@ -13,7 +13,7 @@ import base64
 from inspect import getsourcefile
 import os.path
 import sys
-from io import BytesIO
+import magic
 import tempfile
 import cv2
 
@@ -30,18 +30,16 @@ train_on_gpu = torch.cuda.is_available()
 
 def detectedge(image_in, image_type):
     binary_image = base64.b64decode(image_in)
-    f = tempfile.NamedTemporaryFile()
-    #TODO Ugly Hack but for now let it be.
+    file_format = magic.from_buffer(binary_image, mime=True).split('/')[1]
+    print(file_format)
+    # This could be improved more
+    f = tempfile.NamedTemporaryFile(suffix='*.' + str(file_format))
     f.write(binary_image)
     x = cv2.imread(f.name)
     y = cv2.resize(x, (480,320))
-    resize_img = tempfile.NamedTemporaryFile(suffix='.png')
-    cv2.imwrite(resize_img.name,y)
-    if image_type == 'RGB':
-        image = PIL.Image.open(resize_img)
-        IMAGE_TYPE = 'RGB'
-    else:
-        image = PIL.Image.open(resize_img)
+    image = PIL.Image.fromarray(y)
+    IMAGE_TYPE = 'RGB'
+    if y.shape == 2:
         image = image.convert('RGB')
         IMAGE_TYPE = 'L'
 
@@ -55,7 +53,10 @@ def detectedge(image_in, image_type):
     tensorOutput = estimate(tensorInput, moduleNetwork)
     img_out = PIL.Image.fromarray((tensorOutput.clamp(0.0, 1.0).detach().numpy().transpose(1, 2, 0)[:, :, 0] * 255.0))
 
-    # TODO lets restore the size of the image to original size
+    img_out = img_out.convert(IMAGE_TYPE)
+    result = tempfile.NamedTemporaryFile(suffix="*." + str(file_format))
+    img_out.save(result)
 
-    img = base64.b64encode(img_out.convert(IMAGE_TYPE).tobytes()).decode('utf-8')
-    return img
+    with open(result.name, 'rb') as f:
+        img = base64.b64encode(f.read()).decode('utf-8')
+    return img, file_format
