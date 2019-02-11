@@ -11,3 +11,4 @@ Service/edgedetect_pb2_grpc.py
 *.jpeg
 *.png
 *.gif
+snetd*

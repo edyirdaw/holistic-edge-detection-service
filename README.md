@@ -14,65 +14,66 @@ For another reimplementation based on Caffe, please see: https://github.com/zeak
 
 ## Install prerequisites
 ### Using conda
-
-	conda env create -f environment.yml
-	conda activate edge-detection-snet-agent
-
+```bash
+conda env create -f environment.yml
+conda activate edge-detection-snet-agent
+```
 
 ## Using pip
+```bash
 	#To install requirements for the project 
-	$ pip install -r requirements.txt
-	
-	$ pip install grpcio
-	$ pip install grpcio-tools
-	
-## Download pretrained models
+$ pip install -r requirements.txt
 
-	bash download.bash
+$ pip install grpcio
+$ pip install grpcio-tools
+```
+## Download pretrained models
+```bash
+bash download.bash
+```
          
 
 ## Setup
 - run the following command to generate gRPC classes for Python
-    
-      # only in Service folder run
-      $ python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. edgedetect.proto
-
-
-
+```bash
+# only in Service folder run
+$ python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. edgedetect.proto
+```
 ## Usage
 To run it on your own image, use the following command. Please make sure to see their paper / the code for more details.
-
-
+```bash
+# on project directory this will start the server 
+$ python  start_service.py
+```
 	
-
-	# on project directory this will start the server 
-	$ python  start_service.py
-
-
-
-
 ## Using docker with GPU
 
 If you have a [nvidia-docker2](https://github.com/NVIDIA/nvidia-docker) installed, we have Dockerfile.gpu which you can use to build your image.
 
-     docker build --file Dockerfile.gpu . -t singnet:hed
-
+```bash
+docker build --file Dockerfile.gpu . -t singularitynet:hed
+```
 ## Using docker with CPU
 
 You can also build an image which has only the CPU dependecies to evaluate the models provided.
 
-	docker build --file Dockerfile . -t singnet:hed-cpu
+```bash
+docker build --file Dockerfile . -t singularitynet:hed-cpu
+```
 	
 
 ## How to Use the docker image
 	
-	# this will open port 50051 and run the service 
-	docker run -it --rm -p 50051:50051 singnet:hed
+```bash
+# this will open port 50051 and run the service 
+docker run -it --rm -p 50051:50051 singnet:hed
+```
 	
 
 ## Authors
 - original code from [sniklaus github repo](https://github.com/sniklaus/pytorch-hed)
-- [Israel Abebe](https://github.com/IsraelAbebe) - Maintainer- [SingularityNet.io](https://singularitynet.io/)
+- [Israel Abebe](https://github.com/IsraelAbebe) - Maintainer - [SingularityNet.io](https://singularitynet.io/)
+- [Tesfa Yohannes](https://github.com/tesyolan) - Maintainer - [SingularityNet.io](https://singularitynet.io/)
 
 
  It achieves an ODS=0.774  on the BSDS500 dataset, evaluated using [this code](https://github.com/zeakey/edgeval). Please feel free to contribute to this repository by submitting issues and pull requests.
