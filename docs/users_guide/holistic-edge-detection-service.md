@@ -1,4 +1,4 @@
-![SingularityNet.io](./images/singnet-logo.jpg?raw=true 'SingularityNET')
+![SingularityNet.io](../images/singnet-logo.jpg?raw=true 'SingularityNET')
 
 [![CircleCI](https://circleci.com/gh/IsraelAbebe/pytorch-hed.svg?style=svg)](https://circleci.com/gh/IsraelAbebe/pytorch-hed)
 
@@ -47,4 +47,4 @@ with open("images/client_out2." + file_format, 'wb') as f:
      
 Example result after saving the image might look like
 
-![Expected output](./images/client_out.png?raw=true 'SingularityNET')
+![Expected output](../images/client_out.png?raw=true 'SingularityNET')

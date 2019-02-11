@@ -30,6 +30,7 @@ COPY . /pytorch-hed
 WORKDIR /pytorch-hed
 
 EXPOSE 8001
+EXPOSE 8002
 
 # EXPOSE 50051
 
