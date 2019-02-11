@@ -22,5 +22,8 @@
             "group_name": "default_group",
             "endpoint": "http://159.69.56.49:8001"
         }
-    ]
+    ],
+    "service_description": {
+        "description": "This service provides age detection service for given images using pytorch frameworks based on the paper [Holistically-Nested Edge Detection](https://arxiv.org/abs/1504.06375)."
+    }
 }
