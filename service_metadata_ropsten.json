@@ -5,7 +5,7 @@
     "service_type": "grpc",
     "payment_expiration_threshold": 40320,
     "model_ipfs_hash": "QmYMyojQrsLQRFSt8faEFaUZeX6AMGd43FtcmCeMBHWBgH",
-    "mpe_address": "0x39f31Ac7B393fE2C6660b95b878FEB16eA8f3156",
+    "mpe_address": "0x7E6366Fbe3bdfCE3C906667911FC5237Cc96BD08",
     "pricing": {
         "price_model": "fixed_price",
         "price_in_cogs": 1
@@ -13,14 +13,14 @@
     "groups": [
         {
             "group_name": "default_group",
-            "group_id": "mKVuoJsF/eTqbXiDk9nb+iHhIqQ7W8UV5QFuqYsFhZc=",
+            "group_id": "oq4XvtedgPWO40NXMu/G/FnalD+3ltV+O51piN7PCh4=",
             "payment_address": "0xd708A068F606893120eA34eECe8a2f7448Fca764"
         }
     ],
     "endpoints": [
         {
             "group_name": "default_group",
-            "endpoint": "http://159.69.56.49:8001"
+            "endpoint": "http://159.69.56.49:8002"
         }
     ],
     "service_description": {
