@@ -11,9 +11,10 @@ import edgedetect
 class EdgedetectServicer(edgedetect_pb2_grpc.EdgedetectServicer):
     def DetectEdge(self, request, context):
         if request.image is None:
-            raise InvalidParams("Image is required")
+            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+            context.set_details("Image is required")
         if request.image_type is None:
-            raise InvalidParams("Image type is required")
+            pass
         response = edgedetect_pb2.ImageFile()
         response.image, response.image_type = edgedetect.detectedge(request.image, request.image_type)
         return response
