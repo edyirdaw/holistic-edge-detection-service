@@ -20,7 +20,7 @@
     "endpoints": [
         {
             "group_name": "default_group",
-            "endpoint": "https:///tz-services-1.snet.sh/holistic-edge-detection-kovan"
+            "endpoint": "https://tz-services-1.snet.sh/holistic-edge-detection-kovan"
         }
     ],
     "service_description": {
