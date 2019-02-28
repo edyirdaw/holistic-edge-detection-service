@@ -1,6 +1,6 @@
 #!/bin/bash
 
-snet_daemon_v=0.1.6
+snet_daemon_v=0.1.7
 
 # apt install tar
 if [ ! -d snet-daemon-v$snet_daemon_v ] ; then
@@ -15,5 +15,5 @@ fi
 
 wget --timestamping http://content.sniklaus.com/github/pytorch-hed/network-bsds500.pytorch
 
-cp snet.config.example.kovan snet.config.example.kovan.json
+cp snet.config.example.mainnet snet.config.example.mainnet.json
 cp snet.config.example.ropsten snet.config.example.ropsten.json
